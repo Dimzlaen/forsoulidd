@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kumpulan Pesan - Keluarga Kecilku</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 50%, #0ea5e9 100%);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      color: #334155;
+    }
+
+    /* Container Slide dengan Transisi Fade */
+    .slide-page {
+      display: none;
+      width: 100%;
+      max-width: 1150px;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+    }
+
+    .slide-page.active-slide {
+      display: flex;
+    }
+
+    .slide-page.fade-in {
+      opacity: 1;
+    }
+
+    /* Kartu Utama */
+    .message-card {
+      background: #f8fafc;
+      width: 100%;
+      max-width: 1150px;
+      padding: 40px 50px;
+      border-radius: 16px;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      position: relative;
+      color: #1e293b;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message-navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .message-navbar.seq-animate {
+      animation: fadeInUpSeq 1.2s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .brand-tag {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #0d9488;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .btn-nav-text {
+      text-decoration: none;
+      color: #0891b2;
+      font-size: 1rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .btn-nav-text:hover {
+      color: #0d9488;
+    }
+
+    /* Header Box */
+    .message-header-box {
+      text-align: center;
+      margin-bottom: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .message-header-box.seq-animate {
+      animation: fadeInUpSeq 1.2s ease forwards;
+      animation-delay: 0.5s;
+    }
+
+    .message-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    .message-subtitle {
+      font-size: 0.95rem;
+      color: #64748b;
+      letter-spacing: 0.5px;
+    }
+
+    /* Grid Container untuk 2 Orang per Slide */
+    .members-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .members-grid.seq-animate {
+      animation: fadeInUpSeq 1.2s ease forwards;
+      animation-delay: 1s;
+    }
+
+    /* Kartu Pesan Individu */
+    .member-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .member-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .member-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    .member-number {
+      background: #5eead4;
+      color: #134e4a;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .member-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .member-note {
+      background: #f0fdf4;
+      border-left: 3px solid #2dd4bf;
+      padding: 12px 15px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #334155;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+
+    @keyframes fadeInUpSeq {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .members-grid {
+        grid-template-columns: 1fr;
+      }
+      .message-card {
+        padding: 25px 20px;
+      }
+      .message-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+     SLIDE 1 (Latief & Alya)
+  ========================================== -->
+  <div id="slide1" class="slide-page active-slide fade-in">
+    <main class="message-card">
+      <header class="message-navbar" id="s1-nav">
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="alert('Ini adalah slide pertama')"><span>&larr;</span><span>Kembali</span></a>
+        <span class="brand-tag">PESAN KHUSUS (1/5)</span>
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(2)"><span>Lanjut</span><span>&rarr;</span></a>
+      </header>
+
+      <div class="message-header-box" id="s1-header">
+        <h1 class="message-title">Untuk Kalian, Keluarga Kecilku</h1>
+        <p class="message-subtitle">Catatan kecil dan apresiasi tulus dari Dimas untuk kalian semua ✨</p>
+      </div>
+
+      <div class="members-grid" id="s1-grid">
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">1</span>
+            <h2 class="member-name">Latief</h2>
+          </div>
+          <div class="member-note">
+            Latief, makasih ya udah jadi stafli yang baik, keren, josjis, dan juga receh. Makasih kamu udah ngebawa aku dalam mengenal teman-teman soulidd yang lain. Karenamu, aku bisa bergaul dengan teman-teman souliddd yang lain. Makasih atas semua effortmu ke kami, ya. Semoga setiap kebaikanmu dibalas lebih oleh Yang Maha Kuasa.<br><br>
+            Maaf banget untuk setiap salahku ke kamu, setiap candaanku yang berlebihan ke kamu. Maaf juga kalo aku sering lalai, teledor, tidak baca guidebook. Karena kamu yang selalu reminder buat baca-baca begitu aku jadi lebih sering teliti dan cermat dalam mencari informasi. Makasih ya 😊
+          </div>
+        </div>
+
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">2</span>
+            <h2 class="member-name">Alya</h2>
+          </div>
+          <div class="member-note">
+            AYAAAAAA....Selamat pageyyy (keingat mulu kamu ngajarin aku ngomong gitu pakai aksen british). Makasih banget loh ya untuk setiap keseruannya selama ini, makasih juga udh mau bawain alat pancing, aku jadi bisa mancing 😋. Makasih atas setiap kritik dan evaluasi yang selalu kamu berikan. Maaf untuk setiap kesalahan kata dan perbuatan yang kulakukan padamu. Semoga kamu selalu bertemu orang-orang baik ya!. Ayo kapan-kapan motoran lagi, kamu deh yang bawa boleh.
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================
+     SLIDE 2 (Adinda & Shafira)
+  ========================================== -->
+  <div id="slide2" class="slide-page">
+    <main class="message-card">
+      <header class="message-navbar" id="s2-nav">
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(1)"><span>&larr;</span><span>Kembali</span></a>
+        <span class="brand-tag">PESAN KHUSUS (2/5)</span>
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(3)"><span>Lanjut</span><span>&rarr;</span></a>
+      </header>
+
+      <div class="message-header-box" id="s2-header">
+        <h1 class="message-title">Untuk Kalian, Keluarga Kecilku</h1>
+        <p class="message-subtitle">Catatan kecil dan apresiasi tulus dari Dimas untuk kalian semua ✨</p>
+      </div>
+
+      <div class="members-grid" id="s2-grid">
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">3</span>
+            <h2 class="member-name">Adinda</h2>
+          </div>
+          <div class="member-note">
+            DINDAAAA 👋😲...Ey makasih ya udah selalu having fun bareng aku, Kamu orangnya kalem-kalem gitu tapi kamu keren gitu, apalagi pas aku baru tau kamu juga anak robotik, MEKANIKAL LAGI, GOKILLL..... Semangat untuk setiap rencana dan agendamu ya. Maaf untuk semua kesalahan kata dan perbuatanku kepadamu ya. EYYY AJARIN AKU BUAT BELAJAR FUSION, DONG! 😁
+          </div>
+        </div>
+
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">4</span>
+            <h2 class="member-name">Shafira</h2>
+          </div>
+          <div class="member-note">
+            SI TEMAN NAURA YANG KEREN BANGET, LITERALLY SE EFFORT ITU SEBAGAI SEORANG FANS, GOKILL..... Shaf...Kamu keren banget tau, level percaya diri kamu tinggi banget jir, pengen deh bisa sepercaya diri kek kamu. Kamu juga orangnya menghibur banget cuy, apalagi kamu punya bakat nyanyi yang seharusnya dipendam saja, kamu juga salah satu alasan kenapa souliddd ga pernah sepi. Maaf ya setiap kesalahan kata dan perbuatan yang kulakukan padamu ya. Semoga kamu bisa ketemu Naura lagi, ya!
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================
+     SLIDE 3 (Riezco & Avicenna)
+  ========================================== -->
+  <div id="slide3" class="slide-page">
+    <main class="message-card">
+      <header class="message-navbar" id="s3-nav">
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(2)"><span>&larr;</span><span>Kembali</span></a>
+        <span class="brand-tag">PESAN KHUSUS (3/5)</span>
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(4)"><span>Lanjut</span><span>&rarr;</span></a>
+      </header>
+
+      <div class="message-header-box" id="s3-header">
+        <h1 class="message-title">Untuk Kalian, Keluarga Kecilku</h1>
+        <p class="message-subtitle">Catatan kecil dan apresiasi tulus dari Dimas untuk kalian semua ✨</p>
+      </div>
+
+      <div class="members-grid" id="s3-grid">
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">5</span>
+            <h2 class="member-name">Riezco</h2>
+          </div>
+          <div class="member-note">
+            RIZZZCOOO.......kamu beneran rizz sigma banget euy. Kamu orangnya kalem banget ya riz, jarang banget kamu ngajak orang lain buat ngobrol duluan. Keknya aku terus deh yang buka topik buat ngobrol denganmu. Tapi walaupun gitu, kamu tetap ikut buat seru-seruan bukan tipe introvert no life, cuman kamu pendiam aja (CMIIW). Riezcooo.. maaf yak kalo aku orangnya kadang berisik dan garing yak, maaf kalo bercandaku sering kelewatan. Tetap semangat riezco untuk perkuliahanmu. KAMU HARUS LEBIH SERING EKSPLOR KEPUTIH SIH, YOKLAH BARENG AKU.
+          </div>
+        </div>
+
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">6</span>
+            <h2 class="member-name">Avicenna</h2>
+          </div>
+          <div class="member-note">
+            CENNAAAAAA...katanya kamu geli dengar kata "aku-kamu" ya? Lu orangnya gokil banget gils, respek banget gue sama lu. Lu itu orangnya baik banget, makasih ya udah sering ngasih gue tumpangan naik mobil BMW yang pintunya selalu gue banting itu, takut banget gue itu pintu patah. Maaf banget untuk setiap salah gue sama lu cen, maaf kalo candaan gue berlebihan ke lu ya.<br><br>
+            Semangat Cen jadi pengkader nya kasih paham tuh maba maba. COBA LU BELAJAR BUAT NGOMONG PAKAI "AKU-KAMU", DEH.
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================
+     SLIDE 4 (Sherly & Salwa)
+  ========================================== -->
+  <div id="slide4" class="slide-page">
+    <main class="message-card">
+      <header class="message-navbar" id="s4-nav">
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(3)"><span>&larr;</span><span>Kembali</span></a>
+        <span class="brand-tag">PESAN KHUSUS (4/5)</span>
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(5)"><span>Lanjut</span><span>&rarr;</span></a>
+      </header>
+
+      <div class="message-header-box" id="s4-header">
+        <h1 class="message-title">Untuk Kalian, Keluarga Kecilku</h1>
+        <p class="message-subtitle">Catatan kecil dan apresiasi tulus dari Dimas untuk kalian semua ✨</p>
+      </div>
+
+      <div class="members-grid" id="s4-grid">
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">7</span>
+            <h2 class="member-name">Sherly</h2>
+          </div>
+          <div class="member-note">
+            Sherlyyy...Kamu tuh ya kalo aku lihat orangnya ceria, tapi kalem, tapi ga seberisik aku, energimu juga banyak tapi bukan tipe berisik kek aku. Kamu juga orang yang cukup perasa bgitu ya, kecewa jika melihat temanmu berubah tidak seperti biasanya. Makasih ya udah jadi bagian dari keluarga kecil Souliddd. Maaf ya untuk setiap kesalahan dalam perkataan dan perbuatanku. Semangat dalam menjalani perkuliahannya.<br><br>
+            <strong>SHERLY AKU PUNYA KATA-KATA DALAM BAHASA BATAK BUATMU :</strong><br>
+            "Sai hipas-hipas jala gabe ma di hamu nang di sude dongan."<br>
+            <strong>CARI TAU SENDIRI ARTINYA, YA!</strong>
+          </div>
+        </div>
+
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">8</span>
+            <h2 class="member-name">Salwa</h2>
+          </div>
+          <div class="member-note">
+            Salwaaaa...hmmm makasih ya buat keseruannya selama ini. Aku rispek juga sama kamu, kamu kek agak cowo gitu loh kulihat. Soalnya pas mancing kemarin kamu kek "Mana sini aku pasang umpannya" kek kamu itu agak apa gitu (gatau cara bilangnya). Maaf ya untuk setiap kesalahan kata dan perbuatanku ke kamu. Semangat dalm menjalankan perkuliahannya ya.<br><br>
+            <strong>AYO KITA MANCING LAGI!</strong>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================
+     SLIDE 5 (Radit & Aline)
+  ========================================== -->
+  <div id="slide5" class="slide-page">
+    <main class="message-card">
+      <header class="message-navbar" id="s5-nav">
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(4)"><span>&larr;</span><span>Kembali</span></a>
+        <span class="brand-tag">PESAN KHUSUS (5/5)</span>
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="alert('Semua rangkaian pesan khusus telah selesai!')"><span>Selesai</span><span>&check;</span></a>
+      </header>
+
+      <div class="message-header-box" id="s5-header">
+        <h1 class="message-title">Untuk Kalian, Keluarga Kecilku</h1>
+        <p class="message-subtitle">Catatan kecil dan apresiasi tulus dari Dimas untuk kalian semua ✨</p>
+      </div>
+
+      <div class="members-grid" id="s5-grid">
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">9</span>
+            <h2 class="member-name">Radit</h2>
+          </div>
+          <div class="member-note">
+            DIT TOLONGIN DIT.........Hehe. Dit, makasih ya udah jadi bagian dalam kebersamaan dan keseruanku dalam region Soul ini. Sering-sering buka linktree deh Dit buat kedepannya, sama beljar buat BC. Pakai AI aja gampang itu. Maaf ya atas setiap kesalahan kata dan perbuatanku ke kamu, maaf kalo kadang bercandaku berlebihan. Semangat menjalankan perkuliahannya dit, semoga kamu sehat selalu ya.<br><br>
+            <strong>AYO MAIN PS BARENG AKU KITA BELAJAR MAIN PS.</strong>
+          </div>
+        </div>
+
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">10</span>
+            <h2 class="member-name">Aline</h2>
+          </div>
+          <div class="member-note">
+            Sebuah garis (A Line) hehe...Makasih ya udah jadi bagian dari keseruan dalam keluarga kecil region soul. Kamu orangnya kalo ngomong to the point dan bisa menyampaikan permasalahanmu langsung. Itu sih keren banget ya menurutku. Maaf ya untuk setiap kesalahan yang kulakukan dalam kata dan perbuatanku, maaf kalo aku bercanda berlebihan. Semangat dalam perkuliahannya ya.<br><br>
+            <strong>ADUHH AKU BINGUNG MAU CLOSING PAKAI APA...MANCING LAGI AJA LAH YOK, KAMU KEMARIN BELUM ADA MEGANG JORAN KAN.</strong>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Fungsi Navigasi Antar Slide
+    function goToSlide(targetSlide) {
+      const currentSlideEl = document.querySelector('.slide-page.active-slide');
+      const targetSlideEl = document.getElementById('slide' + targetSlide);
+
+      if (!targetSlideEl || currentSlideEl === targetSlideEl) return;
+
+      currentSlideEl.classList.remove('fade-in');
+
+      setTimeout(() => {
+        currentSlideEl.classList.remove('active-slide');
+        
+        // Reset animasi sequential
+        document.querySelectorAll('.message-navbar, .message-header-box, .members-grid').forEach(el => {
+          el.classList.remove('seq-animate');
+        });
+
+        targetSlideEl.classList.add('active-slide');
+        void targetSlideEl.offsetWidth;
+        targetSlideEl.classList.add('fade-in');
+
+        // Jalankan animasi berurutan sesuai target slide
+        const nav = document.getElementById('s' + targetSlide + '-nav');
+        const header = document.getElementById('s' + targetSlide + '-header');
+        const grid = document.getElementById('s' + targetSlide + '-grid');
+
+        if (nav) nav.classList.add('seq-animate');
+        if (header) header.classList.add('seq-animate');
+        if (grid) grid.classList.add('seq-animate');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 800);
+    }
+
+    // Trigger animasi saat pertama kali load untuk slide aktif
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('s1-nav').classList.add('seq-animate');
+      document.getElementById('s1-header').classList.add('seq-animate');
+      document.getElementById('s1-grid').classList.add('seq-animate');
+    });
+  </script>
+
+</body>
+</html>
