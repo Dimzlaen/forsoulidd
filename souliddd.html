@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UNTUK KELUARGA SOULIDKUU</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #050314 0%, #0a0524 50%, #03010c 100%);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      color: #e2e8f0;
+    }
+
+    /* System Slide Control dengan Transisi Fade */
+    .slide-page {
+      display: none;
+      width: 100%;
+      max-width: 1150px;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+    }
+
+    .slide-page.active-slide {
+      display: flex;
+    }
+
+    .slide-page.fade-in {
+      opacity: 1;
+    }
+
+    /* ==========================================
+        OVERLAY INTRO
+    ========================================== */
+    .intro-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(5, 8, 18, 0.93);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      padding: 20px;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    .intro-overlay.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .sound-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .speaker-icon {
+      width: 60px;
+      height: 60px;
+      fill: #5ce1e6;
+    }
+
+    .sound-waves {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      height: 60px;
+    }
+
+    .wave-bar {
+      width: 7px;
+      background: linear-gradient(180deg, #5ce1e6, #0080a8);
+      border-radius: 8px;
+      animation: volumeUp 1.4s ease-in-out infinite alternate;
+    }
+
+    .wave-bar:nth-child(1) { height: 15px; animation-delay: 0.1s; }
+    .wave-bar:nth-child(2) { height: 35px; animation-delay: 0.3s; }
+    .wave-bar:nth-child(3) { height: 55px; animation-delay: 0.5s; }
+    .wave-bar:nth-child(4) { height: 75px; animation-delay: 0.7s; }
+
+    @keyframes volumeUp {
+      0% { transform: scaleY(0.2); opacity: 0.3; }
+      100% { transform: scaleY(1); opacity: 1; }
+    }
+
+    .intro-text-box {
+      text-align: center;
+      color: #ffffff;
+      max-width: 500px;
+    }
+
+    .intro-title {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #c4f4fe;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .intro-desc {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    .btn-start {
+      background: linear-gradient(135deg, #5ce1e6 0%, #0080a8 100%);
+      color: #070a14;
+      border: none;
+      padding: 12px 36px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(92, 225, 230, 0.4);
+    }
+
+    /* ==========================================
+        CONTAINER UTAMA KARTU (SLIDE 1)
+    ========================================== */
+    .scrapbook-card {
+      background: linear-gradient(145deg, #d3f9ec 0%, #c4f4fe 100%);
+      width: 100%;
+      max-width: 1100px;
+      padding: 45px 50px;
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 35px rgba(92, 225, 230, 0.3);
+      position: relative;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .brand-text {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #0d3b4c;
+      letter-spacing: -0.3px;
+    }
+
+    .btn-next-text, .btn-prev-text {
+      text-decoration: none;
+      color: #0d3b4c;
+      font-size: 1rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .btn-next-text:hover, .btn-prev-text:hover {
+      color: #0080a8;
+    }
+
+    /* ==========================================
+        HERO SECTION (SLIDE 1)
+    ========================================== */
+    .hero-section {
+      margin-bottom: 35px;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      line-height: 1.1;
+      font-weight: 400;
+      color: #0b2b37;
+      letter-spacing: -1px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .title-first, .title-second {
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+
+    .title-first {
+      animation: fadeInStay 2s ease-out forwards;
+      animation-delay: 0.5s;
+    }
+
+    .title-second {
+      font-style: italic;
+      font-weight: 600;
+      background: linear-gradient(135deg, #1aa6b7 0%, #0080a8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeInStay 2s ease-out forwards;
+      animation-delay: 2.5s;
+    }
+
+    @keyframes fadeInStay {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* PHOTO GRID (SLIDE 1) */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .photo-item {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      background-color: #b0e0e6;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 6px 16px rgba(13, 59, 76, 0.12);
+      opacity: 0;
+      transform: translateX(-100%);
+      animation: photoSlideIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    .photo-item:nth-child(1) { animation-delay: 5s; }
+    .photo-item:nth-child(2) { animation-delay: 5.3s; }
+    .photo-item:nth-child(3) { animation-delay: 5.6s; }
+    .photo-item:nth-child(4) { animation-delay: 5.9s; }
+
+    @keyframes photoSlideIn {
+      0% { opacity: 0; transform: translateX(-100%); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .photo-item:hover img { transform: scale(1.04); }
+
+    /* ==========================================
+        SLIDE 2 STYLING (Sequential Fade-in Up)
+    ========================================== */
+    .about-card-inner {
+      background: linear-gradient(145deg, #120c38 0%, #0b0628 60%, #160a40 100%);
+      width: 100%;
+      max-width: 1150px;
+      padding: 40px 50px;
+      border-radius: 20px;
+      border: 1px solid rgba(106, 0, 255, 0.25);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(106, 0, 255, 0.15);
+      color: #e0e6ff;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .about-navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .about-navbar.seq-animate {
+      animation: fadeInUpSeq 1.2s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .brand-tag {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #8c93cc;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .about-main-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 35px;
+      margin-bottom: 30px;
+    }
+
+    .about-title-box {
+      flex: 1.1; 
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .about-title-box.seq-animate {
+      animation: fadeInUpSeq 1.2s ease forwards;
+      animation-delay: 0.8s;
+    }
+
+    .about-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.3rem;
+      line-height: 1.05;
+      font-weight: 400;
+      letter-spacing: -1px;
+      white-space: nowrap;
+      background: linear-gradient(135deg, #ffffff 20%, #8f9eff 60%, #b253ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .photo-frame-169 {
+      flex: 1.5;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      background-color: #181045;
+      border: 1px solid rgba(0, 140, 255, 0.3);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 117, 255, 0.2);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .photo-frame-169.seq-animate {
+      animation: fadeInUpSeq 1.2s ease forwards;
+      animation-delay: 2.8s;
+    }
+
+    .photo-frame-169 img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .photo-frame-169:hover img {
+      transform: scale(1.03);
+    }
+
+    .about-description-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #a3adde;
+      font-weight: 400;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .about-description-grid.seq-animate {
+      animation: fadeInUpSeq 1.2s ease forwards;
+      animation-delay: 4.5s;
+    }
+
+    /* ==========================================
+        SLIDE 3 STYLING (Digabungkan & Sesuai Desain Baru)
+    ========================================== */
+    .slide3-card {
+      background: linear-gradient(145deg, #101c38 0%, #1a1642 50%, #22123d 100%);
+      width: 100%;
+      max-width: 1150px;
+      padding: 40px 50px;
+      border-radius: 20px;
+      border: 1px solid rgba(179, 157, 235, 0.2);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(138, 122, 224, 0.15);
+      position: relative;
+      color: #e2e8f0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide3-navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .slide3-navbar.seq-animate {
+      animation: fadeInUpSeq 1.2s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .slide3-content-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+    }
+
+    /* Bagian Kiri: Header & Teks Narasi */
+    .slide3-left {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    .slide3-header-box {
+      margin-bottom: 18px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .slide3-header-box.seq-animate {
+      animation: fadeInUpSeq 1.2s ease forwards;
+      animation-delay: 0.8s;
+    }
+
+    .slide3-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 400;
+      background: linear-gradient(135deg, #93c5fd 0%, #b39deb 50%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .slide3-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(179, 157, 235, 0.15);
+      border: 1px solid rgba(179, 157, 235, 0.3);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #b39deb;
+      letter-spacing: 0.5px;
+    }
+
+    .slide3-story-box {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      color: #cbd5e1;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .slide3-story-box.seq-animate {
+      animation: fadeInUpSeq 1.2s ease forwards;
+      animation-delay: 4.5s;
+    }
+
+    .story-paragraph {
+      background: rgba(26, 22, 66, 0.4);
+      padding: 10px 14px;
+      border-radius: 10px;
+      border-left: 3px solid #93c5fd;
+    }
+
+    .story-paragraph:nth-child(2) {
+      border-left-color: #b39deb;
+    }
+
+    .story-paragraph:nth-child(3) {
+      border-left-color: #a855f7;
+    }
+
+    /* Bagian Kanan: Tumpukan Banyak Foto Scrapbook */
+    .slide3-right {
+      flex: 1.1;
+      position: relative;
+      height: 440px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .slide3-right.seq-animate {
+      animation: fadeInUpSeq 1.2s ease forwards;
+      animation-delay: 2.8s;
+    }
+
+    /* Gaya Dasar Polaroid / Scrapbook Card */
+    .scrapbook-photo-card {
+      position: absolute;
+      background: #ffffff;
+      padding: 10px 10px 30px 10px;
+      border-radius: 3px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+
+    .scrapbook-photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 2px;
+    }
+
+    /* Penataan Posisi & Rotasi Masing-masing Foto ala Scrapbook */
+    .photo-scrap-1 {
+      width: 160px;
+      height: 200px;
+      left: 10px;
+      top: 10px;
+      transform: rotate(-7deg);
+      z-index: 1;
+    }
+
+    .photo-scrap-2 {
+      width: 175px;
+      height: 215px;
+      right: 15px;
+      top: 5px;
+      transform: rotate(5deg);
+      z-index: 2;
+    }
+
+    .photo-scrap-3 {
+      width: 155px;
+      height: 195px;
+      left: 110px;
+      top: 130px;
+      transform: rotate(3deg);
+      z-index: 4;
+    }
+
+    .photo-scrap-4 {
+      width: 170px;
+      height: 210px;
+      right: 110px;
+      top: 150px;
+      transform: rotate(-6deg);
+      z-index: 3;
+    }
+
+    .photo-scrap-5 {
+      width: 145px;
+      height: 180px;
+      left: 40px;
+      bottom: 5px;
+      transform: rotate(8deg);
+      z-index: 5;
+    }
+
+    .scrapbook-photo-card:hover {
+      transform: scale(1.1) rotate(0deg) !important;
+      z-index: 20;
+      box-shadow: 0 20px 40px rgba(168, 85, 247, 0.4);
+    }
+
+    @keyframes fadeInUpSeq {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ==========================================
+        SLIDE PESAN KHUSUS STYLING
+    ========================================== */
+    .message-card {
+      background: #f8fafc;
+      width: 100%;
+      max-width: 1150px;
+      padding: 40px 50px;
+      border-radius: 16px;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      position: relative;
+      color: #1e293b;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message-navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .message-navbar.seq-animate {
+      animation: fadeInUpSeqMessage 1.2s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .message-card .brand-tag {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #0d9488;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .btn-nav-text {
+      text-decoration: none;
+      color: #0891b2;
+      font-size: 1rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .btn-nav-text:hover {
+      color: #0d9488;
+    }
+
+    .message-header-box {
+      text-align: center;
+      margin-bottom: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .message-header-box.seq-animate {
+      animation: fadeInUpSeqMessage 1.2s ease forwards;
+      animation-delay: 0.5s;
+    }
+
+    .message-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    .message-subtitle {
+      font-size: 0.95rem;
+      color: #64748b;
+      letter-spacing: 0.5px;
+    }
+
+    .members-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .members-grid.seq-animate {
+      animation: fadeInUpSeqMessage 1.2s ease forwards;
+      animation-delay: 1s;
+    }
+
+    .member-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .member-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .member-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    .member-number {
+      background: #5eead4;
+      color: #134e4a;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .member-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .member-note {
+      background: #f0fdf4;
+      border-left: 3px solid #2dd4bf;
+      padding: 12px 15px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #334155;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+
+    @keyframes fadeInUpSeqMessage {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .members-grid {
+        grid-template-columns: 1fr;
+      }
+      .message-card {
+        padding: 25px 20px;
+      }
+      .message-title {
+        font-size: 2rem;
+      }
+    }
+
+    /* Landscape Adjustments */
+    @media (max-orientation: landscape) and (max-height: 500px) {
+      body { padding: 15px; }
+      .scrapbook-card { padding: 25px 30px; }
+      .navbar { margin-bottom: 20px; }
+      .hero-title { font-size: 2.8rem; }
+      .hero-section { margin-bottom: 20px; }
+      
+      .about-card-inner, .slide3-card { padding: 20px 25px; border-radius: 12px; }
+      .about-navbar, .slide3-navbar { margin-bottom: 12px; }
+      .brand-tag { font-size: 0.75rem; }
+      .about-main-section, .slide3-content-wrapper { margin-bottom: 16px; gap: 20px; }
+      .about-title, .slide3-title { font-size: 2.1rem; }
+      .about-description-grid, .slide3-story-box { gap: 10px; font-size: 0.75rem; line-height: 1.45; }
+      .slide3-right { height: 320px; }
+    }
+
+    /* =========================================================
+       SLIDE 9 — FINAL SCRAPBOOK / HARAPANKU UNTUK KALIAN
+       Scoped agar desain slide terakhir tidak mengubah slide lain.
+       ========================================================= */
+    #slide9 {
+        width: 100vw;
+        max-width: none;
+        height: 100vh;
+        min-height: 100vh;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        overflow: hidden;
+        display: none;
+        align-items: initial;
+        justify-content: initial;
+        background: linear-gradient(135deg, #cbe3f3 0%, #e2eff7 50%, #f6fbff 100%);
+        color: #1a1a1a;
+    }
+
+    #slide9.active-slide {
+        display: block;
+    }
+
+    #slide9::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    #slide9 .final-video-group {
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        z-index: 30;
+    }
+
+    #slide9 .final-video-container {
+        width: 260px;
+        aspect-ratio: 16 / 9;
+        height: auto;
+        background: #ffffff;
+        padding: 4px 4px 18px 4px;
+        border-radius: 4px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.04);
+        position: relative;
+    }
+
+    #slide9 .final-video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 2px;
+    }
+
+    #slide9 .final-filename {
+        position: absolute;
+        bottom: 3px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 6px;
+        color: #aaa;
+        font-family: monospace;
+        letter-spacing: -0.2px;
+        white-space: nowrap;
+    }
+
+    #slide9 .final-hero-center {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 40;
+        width: 100%;
+        max-width: 480px;
+        padding: 0 15px;
+    }
+
+    #slide9 .final-hero-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+        font-weight: 600;
+        line-height: 1.1;
+        color: #1a1a1a;
+        position: relative;
+        display: inline-block;
+        margin-bottom: 6px;
+    }
+
+    #slide9 .final-hero-title::after {
+        content: '';
+        position: absolute;
+        bottom: 4px;
+        left: -6px;
+        right: -6px;
+        height: 40%;
+        background-color: #ffe66d;
+        z-index: -1;
+        opacity: 0.9;
+        border-radius: 4px;
+    }
+
+    #slide9 .final-hero-subtitle {
+        font-size: clamp(0.65rem, 1vw, 0.8rem);
+        color: #2c3e50;
+        font-weight: 500;
+        line-height: 1.35;
+        letter-spacing: -0.2px;
+        max-width: 360px;
+        margin: 0 auto;
+        text-shadow: 0 2px 10px rgba(255,255,255,0.9);
+    }
+
+    #slide9 .final-photo-card {
+        position: absolute;
+        background: #ffffff;
+        padding: 4px 4px 14px 4px;
+        border-radius: 4px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.04);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        z-index: 10;
+    }
+
+    #slide9 .final-photo-card:hover,
+    #slide9 .final-video-container:hover {
+        transform: scale(1.03) rotate(0deg) !important;
+        z-index: 99;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    #slide9 .final-photo-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 2px;
+    }
+
+    #slide9 .final-card-1 { top: 10%; left: 6%; width: 105px; height: 122px; transform: rotate(-5deg); }
+    #slide9 .final-card-2 { bottom: 6%; left: 10%; width: 95px; height: 110px; transform: rotate(4deg); }
+    #slide9 .final-card-4 { top: 10%; right: 6%; width: 105px; height: 120px; transform: rotate(5deg); }
+    #slide9 .final-card-5 { bottom: 6%; right: 8%; width: 110px; height: 128px; transform: rotate(-4deg); }
+    #slide9 .final-card-6 { top: 46%; right: 3%; width: 90px; height: 105px; transform: rotate(2deg); }
+    #slide9 .final-card-7 { top: 46%; left: 3%; width: 85px; height: 100px; transform: rotate(-6deg); }
+
+    @media (max-width: 768px) {
+        #slide9 .final-video-container { width: 190px; }
+        #slide9 .final-card-1, #slide9 .final-card-4 { width: 88px; height: 102px; }
+        #slide9 .final-card-2 { width: 80px; height: 93px; }
+        #slide9 .final-card-5 { width: 90px; height: 105px; }
+        #slide9 .final-card-6 { width: 75px; height: 88px; }
+        #slide9 .final-card-7 { width: 70px; height: 82px; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ELEMEN AUDIO -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="Tulus.mp3" type="audio/mpeg">
+    Browser kamu tidak mendukung elemen audio.
+  </audio>
+
+  <!-- Overlay Intro -->
+  <div class="intro-overlay" id="introOverlay">
+    <div class="sound-container">
+      <svg class="speaker-icon" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"></path></svg>
+      <div class="sound-waves">
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+      </div>
+    </div>
+    <div class="intro-text-box">
+      <h2 class="intro-title">TURN ON SPEAKER FOR BETTER EXPERIENCE</h2>
+      <p class="intro-desc">Atur volume speaker nya ya😊</p>
+      <button class="btn-start" onclick="enterScrapbook()">Ayo Mulai</button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+     SLIDE 1
+  ========================================== -->
+  <div id="slide1" class="slide-page active-slide">
+    <main class="scrapbook-card">
+      <header class="navbar">
+        <span class="brand-text">From Dimas</span>
+        <a href="javascript:void(0);" class="btn-next-text" onclick="goToSlide(2)"><span>Lanjut</span><span>&rarr;</span></a>
+      </header>
+
+      <section class="hero-section">
+        <h1 class="hero-title">
+          <span class="title-first">UNTUK</span>
+          <span class="title-second">KELUARGA SOULIDKUU</span>
+        </h1>
+      </section>
+
+      <section class="photo-grid" id="galeri">
+        <div class="photo-item"><img src="Foto1.jpg.jpeg" alt="Memori 1"></div>
+        <div class="photo-item"><img src="Foto2.jpg.jpeg" alt="Memori 2"></div>
+        <div class="photo-item"><img src="Foto3.jpg.jpeg" alt="Memori 3"></div>
+        <div class="photo-item"><img src="Foto4.jpg.jpeg" alt="Memori 4"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ==========================================
+     SLIDE 2 (Rasa Syukurku)
+  ========================================== -->
+  <div id="slide2" class="slide-page">
+    <main class="about-card-inner">
+      <header class="about-navbar" id="s2-nav">
+        <a href="javascript:void(0);" class="btn-prev-text" onclick="goToSlide(1)"><span>&larr;</span><span>Kembali</span></a>
+        <span class="brand-tag">PERTEMUAN PERTAMA</span>
+        <a href="javascript:void(0);" class="btn-next-text" onclick="goToSlide(3)"><span>Lanjut</span><span>&rarr;</span></a>
+      </header>
+
+      <section class="about-main-section">
+        <div class="about-title-box" id="s2-title">
+          <h1 class="about-title">
+            Rasa<br>Syukurku
+          </h1>
+        </div>
+
+        <!-- Foto Lokal Slide 2 -->
+        <div class="photo-frame-169" id="s2-photo">
+          <img src="Foto.jpg.jpeg" alt="Foto Pertemuan Pertama">
+        </div>
+      </section>
+
+      <!-- Kolom Teks Cerita/Refleksi -->
+      <section class="about-description-grid" id="s2-desc">
+        <p>
+          Aku tak pernah menyangka bisa sampai di titik ini, setelah banyaknya penolakan yang kualami. Aku pikir awalnya, yang kuterima adalah penolakan lain seperti biasanya. Ternyata kisah yang ditulis Tuhan kali ini memiliki plot twist. Aku bisa bertemu dengan kalian, keluarga kecilku yang baru.
+          <br><br>
+          Aku ingat bagaimana kalian menyambutku melalui chat yang sangat banyak. Aku ingat bagaimana kalian mengajariku disaat aku baru join ke dalam grup dan membuat template perkenalan yang sangat "sedikit" itu.
+        </p>
+        <p>
+          Aku senang bagaimana aku bisa melihat kalian semua pertama kali melalui BISUL 2.0. Aku juga senang mengetahui bahwa kalian ternyata sangat menyenangkan dan memberi first impression yang baik untukku dan membuat aku berpikir, <em>"Jadi ini keluarga baruku, mereka sangat menyenangkan, ya."</em>
+          <br><br>
+          Terima kasih sudah menyambutku. Terimakasih sudah menjadi keluarga kecilku yang baru.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <!-- ==========================================
+     SLIDE 3 (Banyak Cerita Seru)
+  ========================================== -->
+  <div id="slide3" class="slide-page">
+    <main class="slide3-card">
+      <header class="slide3-navbar" id="s3-nav">
+        <a href="javascript:void(0);" class="btn-prev-text" onclick="goToSlide(2)"><span>&larr;</span><span>Kembali</span></a>
+        <span class="brand-tag">MOMEN KITA</span>
+        <a href="javascript:void(0);" class="btn-next-text" onclick="goToSlide(4)"><span>Lanjut</span><span>&rarr;</span></a>
+      </header>
+
+      <div class="slide3-content-wrapper">
+        <!-- Sisi Kiri: Header & Teks Narasi -->
+        <div class="slide3-left">
+          <div class="slide3-header-box" id="s3-titlebox">
+            <h1 class="slide3-title">Setiap Momen</h1>
+            <span class="slide3-badge">Banyak Cerita Seru</span>
+          </div>
+
+          <div class="slide3-story-box" id="s3-story">
+            <div class="story-paragraph">
+              Terimakasih atas banyaknya hal seru yang aku lalui bersama kalian semua. Mulai dari memancing, dimana itu adalah wacana yang sudah sangat lama aku inginkan. Ternyata, aku bisa melakukannya bareng kalian semua. Kapan-kapan ayo mancing lagi.
+            </div>
+            <div class="story-paragraph">
+              Terimakasih atas banyaknya <em>first experience</em> yang kulakukan berkat kalian. Main di rumah hantu, photobox, jalan-jalan rame-rame, dan masih banyak lagi yang tak bisa kusebutkan satu-satu (nanti satu page ini penuh).
+            </div>
+            <div class="story-paragraph">
+              Aku harap kedepannya kita bisa lakukan bersama lagi ya, karena aku suka banget sama momen kebersamaan dan keseruan 😋
+            </div>
+          </div>
+        </div>
+
+        <!-- Sisi Kanan: Tumpukan Banyak Foto Scrapbook -->
+        <div class="slide3-right" id="s3-photo">
+          <!-- Foto 1 -->
+          <div class="scrapbook-photo-card photo-scrap-1">
+            <img src="Foto4.jpg.jpeg" alt="Memori 1">
+          </div>
+          <!-- Foto 2 -->
+          <div class="scrapbook-photo-card photo-scrap-2">
+            <img src="Foto2.jpg.jpeg" alt="Memori 2">
+          </div>
+          <!-- Foto 3 -->
+          <div class="scrapbook-photo-card photo-scrap-3">
+            <img src="Foto3.jpg.jpeg" alt="Memori 3">
+          </div>
+          <!-- Foto 4 -->
+          <div class="scrapbook-photo-card photo-scrap-4">
+            <img src="Foto6.jpeg" alt="Memori 4">
+          </div>
+          <!-- Foto 5 -->
+          <div class="scrapbook-photo-card photo-scrap-5">
+            <img src="Foto7.jpeg" alt="Memori 5">
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+
+
+  <!-- ==========================================
+     SLIDE 4 (Latief & Alya)
+  ========================================== -->
+  <div id="slide4" class="slide-page">
+    <main class="message-card">
+      <header class="message-navbar" id="s4-nav">
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(3)"><span>&larr;</span><span>Kembali</span></a>
+        <span class="brand-tag">PESAN KHUSUS (1/5)</span>
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(5)"><span>Lanjut</span><span>&rarr;</span></a>
+      </header>
+
+      <div class="message-header-box" id="s4-header">
+        <h1 class="message-title">Untuk Kalian, Keluarga Kecilku</h1>
+        <p class="message-subtitle">Catatan kecil dan apresiasi tulus dari Dimas untuk kalian semua ✨</p>
+      </div>
+
+      <div class="members-grid" id="s4-grid">
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">1</span>
+            <h2 class="member-name">Latief</h2>
+          </div>
+          <div class="member-note">
+            Latief, makasih ya udah jadi stafli yang baik, keren, josjis, dan juga receh. Makasih kamu udah ngebawa aku dalam mengenal teman-teman soulidd yang lain. Karenamu, aku bisa bergaul dengan teman-teman souliddd yang lain. Makasih atas semua effortmu ke kami, ya. Semoga setiap kebaikanmu dibalas lebih oleh Yang Maha Kuasa.<br><br>
+            Maaf banget untuk setiap salahku ke kamu, setiap candaanku yang berlebihan ke kamu. Maaf juga kalo aku sering lalai, teledor, tidak baca guidebook. Karena kamu yang selalu reminder buat baca-baca begitu aku jadi lebih sering teliti dan cermat dalam mencari informasi. Makasih ya 😊
+          </div>
+        </div>
+
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">2</span>
+            <h2 class="member-name">Alya</h2>
+          </div>
+          <div class="member-note">
+            AYAAAAAA....Selamat pageyyy (keingat mulu kamu ngajarin aku ngomong gitu pakai aksen british). Makasih banget loh ya untuk setiap keseruannya selama ini, makasih juga udh mau bawain alat pancing, aku jadi bisa mancing 😋. Makasih atas setiap kritik dan evaluasi yang selalu kamu berikan. Maaf untuk setiap kesalahan kata dan perbuatan yang kulakukan padamu. Semoga kamu selalu bertemu orang-orang baik ya!. Ayo kapan-kapan motoran lagi, kamu deh yang bawa boleh.
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================
+     SLIDE 5 (Adinda & Shafira)
+  ========================================== -->
+  <div id="slide5" class="slide-page">
+    <main class="message-card">
+      <header class="message-navbar" id="s5-nav">
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(4)"><span>&larr;</span><span>Kembali</span></a>
+        <span class="brand-tag">PESAN KHUSUS (2/5)</span>
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(6)"><span>Lanjut</span><span>&rarr;</span></a>
+      </header>
+
+      <div class="message-header-box" id="s5-header">
+        <h1 class="message-title">Untuk Kalian, Keluarga Kecilku</h1>
+        <p class="message-subtitle">Catatan kecil dan apresiasi tulus dari Dimas untuk kalian semua ✨</p>
+      </div>
+
+      <div class="members-grid" id="s5-grid">
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">3</span>
+            <h2 class="member-name">Adinda</h2>
+          </div>
+          <div class="member-note">
+            DINDAAAA 👋😲...Ey makasih ya udah selalu having fun bareng aku, Kamu orangnya kalem-kalem gitu tapi kamu keren gitu, apalagi pas aku baru tau kamu juga anak robotik, MEKANIKAL LAGI, GOKILLL..... Semangat untuk setiap rencana dan agendamu ya. Maaf untuk semua kesalahan kata dan perbuatanku kepadamu ya. EYYY AJARIN AKU BUAT BELAJAR FUSION, DONG! 😁
+          </div>
+        </div>
+
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">4</span>
+            <h2 class="member-name">Shafira</h2>
+          </div>
+          <div class="member-note">
+            SI TEMAN NAURA YANG KEREN BANGET, LITERALLY SE EFFORT ITU SEBAGAI SEORANG FANS, GOKILL..... Shaf...Kamu keren banget tau, level percaya diri kamu tinggi banget jir, pengen deh bisa sepercaya diri kek kamu. Kamu juga orangnya menghibur banget cuy, apalagi kamu punya bakat nyanyi yang seharusnya dipendam saja, kamu juga salah satu alasan kenapa souliddd ga pernah sepi. Maaf ya setiap kesalahan kata dan perbuatan yang kulakukan padamu ya. Semoga kamu bisa ketemu Naura lagi, ya!
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================
+     SLIDE 6 (Riezco & Avicenna)
+  ========================================== -->
+  <div id="slide6" class="slide-page">
+    <main class="message-card">
+      <header class="message-navbar" id="s6-nav">
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(5)"><span>&larr;</span><span>Kembali</span></a>
+        <span class="brand-tag">PESAN KHUSUS (3/5)</span>
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(7)"><span>Lanjut</span><span>&rarr;</span></a>
+      </header>
+
+      <div class="message-header-box" id="s6-header">
+        <h1 class="message-title">Untuk Kalian, Keluarga Kecilku</h1>
+        <p class="message-subtitle">Catatan kecil dan apresiasi tulus dari Dimas untuk kalian semua ✨</p>
+      </div>
+
+      <div class="members-grid" id="s6-grid">
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">5</span>
+            <h2 class="member-name">Riezco</h2>
+          </div>
+          <div class="member-note">
+            RIZZZCOOO.......kamu beneran rizz sigma banget euy. Kamu orangnya kalem banget ya riz, jarang banget kamu ngajak orang lain buat ngobrol duluan. Keknya aku terus deh yang buka topik buat ngobrol denganmu. Tapi walaupun gitu, kamu tetap ikut buat seru-seruan bukan tipe introvert no life, cuman kamu pendiam aja (CMIIW). Riezcooo.. maaf yak kalo aku orangnya kadang berisik dan garing yak, maaf kalo bercandaku sering kelewatan. Tetap semangat riezco untuk perkuliahanmu. KAMU HARUS LEBIH SERING EKSPLOR KEPUTIH SIH, YOKLAH BARENG AKU.
+          </div>
+        </div>
+
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">6</span>
+            <h2 class="member-name">Avicenna</h2>
+          </div>
+          <div class="member-note">
+            CENNAAAAAA...katanya kamu geli dengar kata "aku-kamu" ya? Lu orangnya gokil banget gils, respek banget gue sama lu. Lu itu orangnya baik banget, makasih ya udah sering ngasih gue tumpangan naik mobil BMW yang pintunya selalu gue banting itu, takut banget gue itu pintu patah. Maaf banget untuk setiap salah gue sama lu cen, maaf kalo candaan gue berlebihan ke lu ya.<br><br>
+            Semangat Cen jadi pengkader nya kasih paham tuh maba maba. COBA LU BELAJAR BUAT NGOMONG PAKAI "AKU-KAMU", DEH.
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================
+     SLIDE 7 (Sherly & Salwa)
+  ========================================== -->
+  <div id="slide7" class="slide-page">
+    <main class="message-card">
+      <header class="message-navbar" id="s7-nav">
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(6)"><span>&larr;</span><span>Kembali</span></a>
+        <span class="brand-tag">PESAN KHUSUS (4/5)</span>
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(8)"><span>Lanjut</span><span>&rarr;</span></a>
+      </header>
+
+      <div class="message-header-box" id="s7-header">
+        <h1 class="message-title">Untuk Kalian, Keluarga Kecilku</h1>
+        <p class="message-subtitle">Catatan kecil dan apresiasi tulus dari Dimas untuk kalian semua ✨</p>
+      </div>
+
+      <div class="members-grid" id="s7-grid">
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">7</span>
+            <h2 class="member-name">Sherly</h2>
+          </div>
+          <div class="member-note">
+            Sherlyyy...Kamu tuh ya kalo aku lihat orangnya ceria, tapi kalem, tapi ga seberisik aku, energimu juga banyak tapi bukan tipe berisik kek aku. Kamu juga orang yang cukup perasa bgitu ya, kecewa jika melihat temanmu berubah tidak seperti biasanya. Makasih ya udah jadi bagian dari keluarga kecil Souliddd. Maaf ya untuk setiap kesalahan dalam perkataan dan perbuatanku. Semangat dalam menjalani perkuliahannya.<br><br>
+            <strong>SHERLY AKU PUNYA KATA-KATA DALAM BAHASA BATAK BUATMU :</strong><br>
+            "Sai hipas-hipas jala gabe ma di hamu nang di sude dongan."<br>
+            <strong>CARI TAU SENDIRI ARTINYA, YA!</strong>
+          </div>
+        </div>
+
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">8</span>
+            <h2 class="member-name">Salwa</h2>
+          </div>
+          <div class="member-note">
+            Salwaaaa...hmmm makasih ya buat keseruannya selama ini. Aku rispek juga sama kamu, kamu kek agak cowo gitu loh kulihat. Soalnya pas mancing kemarin kamu kek "Mana sini aku pasang umpannya" kek kamu itu agak apa gitu (gatau cara bilangnya). Maaf ya untuk setiap kesalahan kata dan perbuatanku ke kamu. Semangat dalm menjalankan perkuliahannya ya.<br><br>
+            <strong>AYO KITA MANCING LAGI!</strong>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================
+     SLIDE 8 (Radit & Aline)
+  ========================================== -->
+  <div id="slide8" class="slide-page">
+    <main class="message-card">
+      <header class="message-navbar" id="s8-nav">
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(7)"><span>&larr;</span><span>Kembali</span></a>
+        <span class="brand-tag">PESAN KHUSUS (5/5)</span>
+        <a href="javascript:void(0);" class="btn-nav-text" onclick="goToSlide(9)"><span>Lanjut</span><span>&rarr;</span></a>
+      </header>
+
+      <div class="message-header-box" id="s8-header">
+        <h1 class="message-title">Untuk Kalian, Keluarga Kecilku</h1>
+        <p class="message-subtitle">Catatan kecil dan apresiasi tulus dari Dimas untuk kalian semua ✨</p>
+      </div>
+
+      <div class="members-grid" id="s8-grid">
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">9</span>
+            <h2 class="member-name">Radit</h2>
+          </div>
+          <div class="member-note">
+            DIT TOLONGIN DIT.........Hehe. Dit, makasih ya udah jadi bagian dalam kebersamaan dan keseruanku dalam region Soul ini. Sering-sering buka linktree deh Dit buat kedepannya, sama beljar buat BC. Pakai AI aja gampang itu. Maaf ya atas setiap kesalahan kata dan perbuatanku ke kamu, maaf kalo kadang bercandaku berlebihan. Semangat menjalankan perkuliahannya dit, semoga kamu sehat selalu ya.<br><br>
+            <strong>AYO MAIN PS BARENG AKU KITA BELAJAR MAIN PS.</strong>
+          </div>
+        </div>
+
+        <div class="member-box">
+          <div class="member-header">
+            <span class="member-number">10</span>
+            <h2 class="member-name">Aline</h2>
+          </div>
+          <div class="member-note">
+            Sebuah garis (A Line) hehe...Makasih ya udah jadi bagian dari keseruan dalam keluarga kecil region soul. Kamu orangnya kalo ngomong to the point dan bisa menyampaikan permasalahanmu langsung. Itu sih keren banget ya menurutku. Maaf ya untuk setiap kesalahan yang kulakukan dalam kata dan perbuatanku, maaf kalo aku bercanda berlebihan. Semangat dalam perkuliahannya ya.<br><br>
+            <strong>ADUHH AKU BINGUNG MAU CLOSING PAKAI APA...MANCING LAGI AJA LAH YOK, KAMU KEMARIN BELUM ADA MEGANG JORAN KAN.</strong>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+
+
+  <!-- ==========================================
+       SLIDE 9 (Harapanku Untuk Kalian) — FINAL
+  ========================================== -->
+  <div id="slide9" class="slide-page">
+    <!-- 1 Video Landscape di Bagian Atas Tengah -->
+    <div class="final-video-group">
+        <div class="final-video-container">
+            <video autoplay muted loop playsinline>
+                <source src="Videosoul.mp4" type="video/mp4">
+            </video>
+            <span class="final-filename">video_01.mp4</span>
+        </div>
+    </div>
+
+    <!-- Main Title & Subtitle Section -->
+    <div class="final-hero-center">
+        <h1 class="final-hero-title">Harapanku<br>Untuk Kalian</h1>
+        <p class="final-hero-subtitle">Semoga kebersamaan kita terus berlanjut, Doaku agar kalian sukses dalam setiap rencana kalian.</p>
+    </div>
+
+    <!-- Floating Photos di Sekeliling Tepi Layar -->
+    <div class="final-photo-card final-card-1">
+        <img src="Foto9.JPG" alt="Moment 1">
+        <span class="final-filename">memory_01.jpg</span>
+    </div>
+
+    <div class="final-photo-card final-card-2">
+        <img src="Foto10.jpeg" alt="Moment 2">
+        <span class="final-filename">details.jpg</span>
+    </div>
+
+    <div class="final-photo-card final-card-4">
+        <img src="Foto11.jpeg" alt="Moment 4">
+        <span class="final-filename">slay.png</span>
+    </div>
+
+    <div class="final-photo-card final-card-5">
+        <img src="Foto12.jpeg" alt="Moment 5">
+        <span class="final-filename">vibes.png</span>
+    </div>
+
+    <div class="final-photo-card final-card-6">
+        <img src="Foto13.jpeg" alt="Moment 6">
+        <span class="final-filename">portrait.jpg</span>
+    </div>
+
+    <div class="final-photo-card final-card-7">
+        <img src="Foto14.jpeg" alt="Moment 7">
+        <span class="final-filename">gathering.jpg</span>
+    </div>
+  </div>
+
+  <script>
+    async function enterScrapbook() {
+      const overlay = document.getElementById('introOverlay');
+      const music = document.getElementById('bgMusic');
+      const firstSlide = document.getElementById('slide1');
+
+      if (music) {
+        music.play().catch(error => {
+          console.log("Autoplay diblokir browser:", error);
+          document.body.addEventListener('click', () => {
+            music.play();
+          }, { once: true });
+        });
+      }
+
+      try {
+        const docEl = document.documentElement;
+        if (docEl.requestFullscreen) { await docEl.requestFullscreen(); }
+        else if (docEl.webkitRequestFullscreen) { await docEl.webkitRequestFullscreen(); }
+
+        if (screen.orientation && screen.orientation.lock) {
+          await screen.orientation.lock('landscape');
+        }
+      } catch (err) {
+        // Mengabaikan error jika dijalankan di browser laptop/desktop
+      }
+
+      // Hilangkan intro terlebih dahulu, lalu mulai masuk ke slide 1.
+      overlay.classList.add('fade-out');
+
+      if (firstSlide) {
+        requestAnimationFrame(() => {
+          firstSlide.classList.add('fade-in');
+        });
+      }
+    }
+
+    // Fungsi Navigasi Antar Slide dengan Efek Transisi
+    function goToSlide(targetSlide) {
+      const currentSlideEl = document.querySelector('.slide-page.active-slide');
+      const targetSlideEl = document.getElementById('slide' + targetSlide);
+
+      if (!targetSlideEl || currentSlideEl === targetSlideEl) return;
+
+      currentSlideEl.classList.remove('fade-in');
+
+      setTimeout(() => {
+        currentSlideEl.classList.remove('active-slide');
+
+        // Reset animasi slide 2 dan 3
+        ['s2-nav','s2-title','s2-photo','s2-desc',
+         's3-nav','s3-titlebox','s3-photo','s3-story'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.remove('seq-animate');
+        });
+
+        // Reset animasi slide pesan khusus
+        for (let i = 4; i <= 9; i++) {
+          ['nav','header','grid'].forEach(part => {
+            const el = document.getElementById(`s${i}-${part}`);
+            if (el) el.classList.remove('seq-animate');
+          });
+        }
+
+        targetSlideEl.classList.add('active-slide');
+        void targetSlideEl.offsetWidth;
+        targetSlideEl.classList.add('fade-in');
+
+        if (targetSlide === 2) {
+          document.getElementById('s2-nav').classList.add('seq-animate');
+          document.getElementById('s2-title').classList.add('seq-animate');
+          document.getElementById('s2-photo').classList.add('seq-animate');
+          document.getElementById('s2-desc').classList.add('seq-animate');
+        }
+
+        if (targetSlide === 3) {
+          document.getElementById('s3-nav').classList.add('seq-animate');
+          document.getElementById('s3-titlebox').classList.add('seq-animate');
+          document.getElementById('s3-photo').classList.add('seq-animate');
+          document.getElementById('s3-story').classList.add('seq-animate');
+        }
+
+        if (targetSlide >= 4 && targetSlide <= 8) {
+          document.getElementById(`s${targetSlide}-nav`).classList.add('seq-animate');
+          document.getElementById(`s${targetSlide}-header`).classList.add('seq-animate');
+          document.getElementById(`s${targetSlide}-grid`).classList.add('seq-animate');
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 800);
+    }
+
+    // Trigger animasi saat pertama kali load untuk slide aktif
+    window.addEventListener('DOMContentLoaded', () => {
+      // Slide 1 tetap menggunakan animasi asli melalui CSS.
+    });
+  </script>
+
+</body>
+</html>
